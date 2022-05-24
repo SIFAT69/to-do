@@ -1,4 +1,3 @@
-import { render } from "@testing-library/react";
 import React from "react";
 import CreateTask from "./CreateTask";
 import TaskList from "./TaskList";
@@ -14,12 +13,17 @@ export default class Main extends React.Component{
    }
    createTask = (task) => {
        if(task.trim() === ''){
-           alert('Nope');
+           alert('You can\'t put empty string!');
            return;
        }
 
        tasks.push({task, isCompleted:false});
        this.setState({tasks: tasks});
+   }
+
+   deleteTask = (taskId) => {
+       tasks.splice(taskId, 1);
+       this.setState({ tasks: tasks });
    }
    render(){
     return (
@@ -28,7 +32,7 @@ export default class Main extends React.Component{
             <div>
                 <CreateTask createTask={this.createTask}/>
                 <br/>
-                <TaskList tasks={this.state.tasks}/>
+                <TaskList tasks={this.state.tasks} deleteTask={this.deleteTask}/>
             </div>
         </div>
     )
